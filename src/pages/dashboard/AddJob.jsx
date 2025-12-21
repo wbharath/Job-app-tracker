@@ -1,9 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
 import { FormRow } from '../../components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FormRowSelect from '../../components/FormRowSelect'
-
+import {
+  clearValues,
+  createJob,
+  handleChange
+} from '../../features/jobs/jobslice'
+import { toast } from 'react-toastify'
 const AddJob = () => {
   const {
     isLoading,
@@ -17,6 +22,7 @@ const AddJob = () => {
     isEditing,
     editJobId
   } = useSelector((store) => store.job)
+  const { user } = useSelector((store) => store.user)
   const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
@@ -25,12 +31,26 @@ const AddJob = () => {
       toast.error('Please fill out all fields')
       return
     }
+    dispatch(createJob({ position, company, jobLocation, jobType, status }))
   }
   const handleJobInput = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log(name, value)
+    dispatch(handleChange({ name, value }))
+    // console.log(name, value)
   }
+
+  const resetValues = () => {
+    dispatch(clearValues())
+  }
+  useEffect(() => {
+    dispatch(
+      handleChange({
+        name: 'jobLocation',
+        value: user.location
+      })
+    )
+  }, [])
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
@@ -53,6 +73,7 @@ const AddJob = () => {
             name="jobLocation"
             labelText="job location"
             value={jobLocation}
+            handleChange={handleJobInput}
           />
 
           <FormRowSelect
@@ -74,7 +95,7 @@ const AddJob = () => {
             <button
               type="button"
               className="btn btn-block clear-btn"
-              onClick={() => console.log('clear values')}
+              onClick={resetValues}
             >
               clear
             </button>
@@ -84,7 +105,7 @@ const AddJob = () => {
               onClick={handleSubmit}
               disabled={isLoading}
             >
-              submit
+              {isLoading ? 'submitting' : 'submit'}
             </button>
           </div>
         </div>
