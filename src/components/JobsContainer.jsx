@@ -2,9 +2,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import Wrapper from '../assets/wrappers/JobsContainer'
 import Job from './Job'
 import Loading from './Loading'
+import { useEffect } from 'react'
+import { getAllJobs } from '../features/alljobs/allJobsSlice'
 const JobsContainer = () => {
   const { jobs, isLoading } = useSelector((store) => store.allJobs)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllJobs())
+  }, [])
+
   if (isLoading) {
     return <Loading center />
   }
@@ -16,12 +23,13 @@ const JobsContainer = () => {
       </Wrapper>
     )
   }
+
   return (
     <Wrapper>
       <h5>Jobs Info</h5>
       <div className="jobs">
         {jobs.map((job) => {
-          console.log(job)
+        //   console.log(job)
           return <Job key={job._id} {...job} />
         })}
       </div>

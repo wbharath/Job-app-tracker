@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import customFetch from '../../../utils/axios'
-
+import { toast } from 'react-toastify'
 const initialFilterState = {
   search: '',
   searchStatus: 'all',
@@ -10,8 +10,8 @@ const initialFilterState = {
 }
 
 const initialState = {
+  isLoading: false,
   jobs: [],
-  isLoading: true,
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
@@ -30,6 +30,7 @@ export const getAllJobs = createAsyncThunk(
           authorization: `Bearer ${thunkAPI.getState().user.user.token}`
         }
       })
+      //   console.log(resp.data)
       return resp.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg)
@@ -40,9 +41,19 @@ export const getAllJobs = createAsyncThunk(
 const allJobsSlice = createSlice({
   name: 'allJobsSlice',
   initialState,
+  reducers: {
+    showLoading: (state) => {
+      state.isLoading = true
+    },
+    hideLoading: (state) => {
+      state.isLoading = false
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllJobs.pending, (state) => [(state.isLoading = false)])
+      .addCase(getAllJobs.pending, (state) => {
+        state.isLoading = false
+      })
       .addCase(getAllJobs.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.jobs = payload.jobs
@@ -54,4 +65,5 @@ const allJobsSlice = createSlice({
   }
 })
 
+export const { showLoading, hideLoading } = allJobsSlice.actions
 export default allJobsSlice.reducer

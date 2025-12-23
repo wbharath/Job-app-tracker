@@ -6,6 +6,7 @@ import FormRowSelect from '../../components/FormRowSelect'
 import {
   clearValues,
   createJob,
+  editJob,
   handleChange
 } from '../../features/jobs/jobslice'
 import { toast } from 'react-toastify'
@@ -31,6 +32,15 @@ const AddJob = () => {
       toast.error('Please fill out all fields')
       return
     }
+    if (isEditing) {
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: { position, company, jobLocation, jobType, status }
+        })
+      )
+      return
+    }
     dispatch(createJob({ position, company, jobLocation, jobType, status }))
   }
   const handleJobInput = (e) => {
@@ -44,12 +54,14 @@ const AddJob = () => {
     dispatch(clearValues())
   }
   useEffect(() => {
-    dispatch(
-      handleChange({
-        name: 'jobLocation',
-        value: user.location
-      })
-    )
+    if (!isEditing) {
+      dispatch(
+        handleChange({
+          name: 'jobLocation',
+          value: user.location
+        })
+      )
+    }
   }, [])
   return (
     <Wrapper>
