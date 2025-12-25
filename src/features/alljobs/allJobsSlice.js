@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import customFetch from '../../../utils/axios'
 import { toast } from 'react-toastify'
 import { authHeader } from '../../../utils/authHeader'
+import { TbRulerMeasure } from 'react-icons/tb'
 const initialFilterState = {
   search: '',
   searchStatus: 'all',
@@ -35,6 +36,19 @@ export const getAllJobs = createAsyncThunk(
   }
 )
 
+export const showStats = createAsyncThunk(
+  'allJobs/showStats',
+  async (_, thunkAPI) => {
+    try {
+      const resp = await customFetch.get('/jobs/stats', authHeader(thunkAPI))
+      // console.log(resp.data)
+      return resp.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg)
+    }
+  }
+)
+
 const allJobsSlice = createSlice({
   name: 'allJobsSlice',
   initialState,
@@ -49,13 +63,25 @@ const allJobsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllJobs.pending, (state) => {
-        state.isLoading = false
+        state.isLoading = true
       })
       .addCase(getAllJobs.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.jobs = payload.jobs
       })
       .addCase(getAllJobs.rejected, (state, { payload }) => {
+        state.isLoading = false
+        toast.error(payload)
+      })
+      .addCase(showStats.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(showStats.fulfilled, (state, { payload }) => {
+        state.isLoading = false
+        state.stats = payload.defaultStats
+        state.monthlyApplications = payload.monthlyApplications
+      })
+      .addCase(showStats.rejected, (state, { payload }) => {
         state.isLoading = false
         toast.error(payload)
       })
