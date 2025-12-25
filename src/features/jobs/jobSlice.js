@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import { getUserFromLocalStorage } from '../../../utils/localStorage'
-import customFetch from '../../../utils/axios'
-import { logoutUser } from '../user/userSlice'
-import { getAllJobs, hideLoading, showLoading } from '../alljobs/allJobsSlice'
-
+import { createJobThunk, deleteJobThunk, editJobThunk } from './jobThunk'
 const initialState = {
   isLoading: false,
   position: '',
@@ -20,61 +17,18 @@ const initialState = {
 
 export const createJob = createAsyncThunk(
   'job/createJob',
-  async (job, thunkAPI) => {
-    try {
-      const resp = await customFetch.post('/jobs', job, {
-        headers: {
-          authorization: `Bearer ${thunkAPI.getState().user.user.token}`
-        }
-      })
-      //   console.log(resp.data)
-      thunkAPI.dispatch(clearValues())
-      return resp.data
-    } catch (error) {
-      if (error.response.status === 401) {
-        thunkAPI.dispatch(logoutUser())
-        return thunkAPI.rejectWithValue('Unauthorized!!Logging out...')
-      }
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
-  }
+  createJobThunk
+  
 )
 
 export const deleteJob = createAsyncThunk(
   '/job/deleteJob',
-  async (jobId, thunkAPI) => {
-    thunkAPI.dispatch(showLoading())
-    console.log(jobId)
-    try {
-      const resp = await customFetch.delete(`/jobs/${jobId}`, {
-        headers: {
-          authorization: `Bearer ${thunkAPI.getState().user.user.token}`
-        }
-      })
-      thunkAPI.dispatch(getAllJobs())
-      return resp.data.msg
-    } catch (error) {
-      thunkAPI.dispatch(hideLoading())
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
-  }
+  deleteJobThunk
 )
 
 export const editJob = createAsyncThunk(
   'job/ediJob',
-  async ({ jobId, job }, thunkAPI) => {
-    try {
-      const resp = await customFetch.patch(`jobs/${jobId}`, job, {
-        headers: {
-          authorization: `Bearer ${thunkAPI.getState().user.user.token}`
-        }
-      })
-      thunkAPI.dispatch(clearValues())
-      return resp.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
-  }
+  editJobThunk
 )
 
 const jobSlice = createSlice({
