@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import customFetch from '../../../utils/axios'
 import { toast } from 'react-toastify'
-import { authHeader } from '../../../utils/authHeader'
 import { TbRulerMeasure } from 'react-icons/tb'
+import { getAllJobsThunk, showStatsThunk } from './allJobsThunk'
 const initialFilterState = {
   search: '',
   searchStatus: 'all',
@@ -22,37 +21,9 @@ const initialState = {
   ...initialFilterState
 }
 
-export const getAllJobs = createAsyncThunk(
-  'allJobs/getJobs',
-  async (_, thunkAPI) => {
-    const { page, search, searchStatus, searchType, sort } =
-      thunkAPI.getState().allJobs
-    let url = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`
-    if (search) {
-      url = url + `&search=${search}`
-    }
-    try {
-      const resp = await customFetch.get(url, authHeader(thunkAPI))
-      //   console.log(resp.data)
-      return resp.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
-  }
-)
+export const getAllJobs = createAsyncThunk('allJobs/getJobs', getAllJobsThunk)
 
-export const showStats = createAsyncThunk(
-  'allJobs/showStats',
-  async (_, thunkAPI) => {
-    try {
-      const resp = await customFetch.get('/jobs/stats', authHeader(thunkAPI))
-      // console.log(resp.data)
-      return resp.data
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg)
-    }
-  }
-)
+export const showStats = createAsyncThunk('allJobs/showStats', showStatsThunk)
 
 const allJobsSlice = createSlice({
   name: 'allJobsSlice',
@@ -73,7 +44,8 @@ const allJobsSlice = createSlice({
     },
     changePage: (state, { payload }) => {
       state.page = payload
-    }
+    },
+    clearAllJobsState: (state) => initialState
   },
   extraReducers: (builder) => {
     builder
@@ -110,6 +82,7 @@ export const {
   hideLoading,
   handleChange,
   clearFilters,
-  changePage
+  changePage,
+  clearAllJobsState
 } = allJobsSlice.actions
 export default allJobsSlice.reducer
