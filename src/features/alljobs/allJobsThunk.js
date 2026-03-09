@@ -3,9 +3,10 @@ import customFetch, { checkForUnauthorizedResponse } from '../../../utils/axios'
 export const showStatsThunk = async (_, thunkAPI) => {
   try {
     const resp = await customFetch.get('/jobs/stats', authHeader(thunkAPI))
-    // console.log(resp.data)
+    console.log(resp.data)
     return resp.data
   } catch (error) {
+     console.log('STATS ERROR:', error.response?.data)
     return checkForUnauthorizedResponse(error, thunkAPI)
   }
 }
@@ -25,3 +26,4 @@ export const getAllJobsThunk = async (_, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI)
   }
 }
+
