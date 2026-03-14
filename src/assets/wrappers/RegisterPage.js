@@ -1,35 +1,68 @@
 import styled from 'styled-components'
-
 const Wrapper = styled.section`
+  min-height: 100vh;
   display: grid;
-  align-items: center;
-  .logo {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 1.38rem;
-  }
-  .form {
-    max-width: 400px;
-    border-top: 5px solid var(--primary-500);
-  }
+  place-items: center;
+  background: var(--slate-50);
+  background-image: radial-gradient(var(--slate-200) 1px, transparent 1px);
+  background-size: 24px 24px;
 
-  h3 {
-    text-align: center;
+  .form-card {
+    width: 90vw;
+    max-width: 420px;
+    background: var(--white);
+    border: 1px solid var(--borderColor);
+    border-radius: var(--borderRadiusLg);
+    box-shadow: var(--shadow-3);
+    padding: 2.5rem;
+    text-transform: capitalize;
   }
-  p {
-    margin: 0;
-    margin-top: 1rem;
-    text-align: center;
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
-  .btn {
-    margin-top: 1rem;
+  .form-title {
+    text-align: center;
+    font-size: 1.375rem;
+    font-weight: 300;
+    color: var(--slate-900);
+    margin-bottom: 0.25rem;
+    font-family: var(--headingFont);
+    text-transform: capitalize;
+  }
+  .form-sub {
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    margin-bottom: 1.75rem;
+  }
+  .divider {
+    height: 1px;
+    background: var(--borderColor);
+    margin: 1.5rem 0;
+  }
+  .switch-text {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--slate-500);
+    margin-top: 1.25rem;
   }
   .member-btn {
     background: transparent;
-    border: transparent;
-    color: var(--primary-500);
+    border: none;
+    color: var(--brand);
+    font-weight: 500;
     cursor: pointer;
-    letter-spacing: var(--letterSpacing);
+    font-family: var(--bodyFont);
+    font-size: 0.875rem;
+    padding: 0 0.25rem;
+    transition: var(--transition);
+  }
+  .member-btn:hover {
+    color: var(--brand-dark);
+  }
+  .btn {
+    margin-top: 0.5rem;
   }
 `
 export default Wrapper

@@ -6,14 +6,8 @@ import NavLinks from './NavLinks'
 const BigSidebar = () => {
   const { isSidebarOpen } = useSelector((store) => store.user)
   return (
-    <Wrapper>
-      <div
-        className={
-          isSidebarOpen
-            ? 'sidebar-container '
-            : 'sidebar-container show-sidebar'
-        }
-      >
+    <Wrapper className={isSidebarOpen ? '' : 'show-sidebar'}>
+      <div className="sidebar-container">
         <div className="content">
           <header>
             <Logo />

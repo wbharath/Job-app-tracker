@@ -9,8 +9,8 @@ const initialState = {
   jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   jobType: 'full-time',
-  statusOptions: ['interview', 'declined', 'pending'],
-  status: 'pending',
+  statusOptions: ['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER'],
+  status: 'APPLIED',
   isEditing: false,
   editJobId: ''
 }

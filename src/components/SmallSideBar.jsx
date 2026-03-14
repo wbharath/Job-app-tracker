@@ -9,17 +9,14 @@ const SmallSideBar = () => {
   const { isSidebarOpen } = useSelector((store) => store.user)
   const dispatch = useDispatch()
 
-  const toggle = () => {
-    dispatch(toggleSidebar())
-  }
+  const toggle = () => dispatch(toggleSidebar())
+
+  if (!isSidebarOpen) return null
+
   return (
     <Wrapper>
-      <div
-        className={
-          isSidebarOpen ? 'sidebar-container show-sidebar' : 'sidebar-container'
-        }
-      >
-        <div className="content">
+      <div className="sidebar-container" onClick={toggle}>
+        <div className="content" onClick={(e) => e.stopPropagation()}>
           <button className="close-btn" onClick={toggle}>
             <FaTimes />
           </button>

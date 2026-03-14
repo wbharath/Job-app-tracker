@@ -1,68 +1,65 @@
 import styled from 'styled-components'
-
 const Wrapper = styled.section`
-  border-radius: var(--borderRadius);
-  width: 100%;
   background: var(--white);
-  padding: 3rem 2rem 4rem;
-  box-shadow: var(--shadow-2);
-  h3 {
-    margin-top: 0;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadiusLg);
+  padding: 2rem;
+
+  .page-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--slate-400);
+    margin-bottom: 1.5rem;
+    font-family: var(--monoFont);
   }
+
   .form {
     margin: 0;
-    border-radius: 0;
+    border: none;
     box-shadow: none;
     padding: 0;
     max-width: 100%;
-    width: 100%;
+    background: none;
   }
   .form-row {
     margin-bottom: 0;
   }
   .form-center {
     display: grid;
-    row-gap: 0.5rem;
+    gap: 1rem;
   }
   .form-center button {
     align-self: end;
-    height: 35px;
-    margin-top: 1rem;
+    height: 38px;
   }
   .btn-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 1rem;
-    align-self: flex-end;
-    margin-top: 0.5rem;
-    button {
-      height: 35px;
-    }
+    gap: 0.75rem;
+    align-self: end;
   }
   .clear-btn {
-    background: var(--grey-500);
+    background: var(--white);
+    color: var(--slate-600);
+    border: 1px solid var(--borderColor);
   }
   .clear-btn:hover {
-    background: var(--black);
+    background: var(--slate-50);
+    border-color: var(--slate-300);
+    color: var(--slate-900);
   }
   @media (min-width: 992px) {
     .form-center {
       grid-template-columns: 1fr 1fr;
-      align-items: center;
-      column-gap: 1rem;
-    }
-    .btn-container {
-      margin-top: 0;
+      align-items: end;
     }
   }
-  @media (min-width: 1120px) {
+  @media (min-width: 1200px) {
     .form-center {
       grid-template-columns: 1fr 1fr 1fr;
     }
-    .form-center button {
-      margin-top: 0;
-    }
   }
 `
-
 export default Wrapper

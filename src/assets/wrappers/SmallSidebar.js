@@ -7,70 +7,91 @@ const Wrapper = styled.aside`
   .sidebar-container {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(15, 23, 42, 0.5);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: stretch;
     z-index: -1;
     opacity: 0;
     transition: var(--transition);
   }
   .show-sidebar {
-    z-index: 99;
+    z-index: 200;
     opacity: 1;
   }
   .content {
     background: var(--white);
-    width: var(--fluid-width);
-    height: 95vh;
-    border-radius: var(--borderRadius);
-    padding: 4rem 2rem;
+    width: 260px;
+    height: 100%;
+    padding: 1.5rem 1rem;
     position: relative;
     display: flex;
-    align-items: center;
     flex-direction: column;
+    border-right: 1px solid var(--borderColor);
   }
   .close-btn {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 1rem;
+    right: 1rem;
     background: transparent;
-    border-color: transparent;
-    font-size: 2rem;
-    color: var(--red-dark);
+    border: 1px solid var(--borderColor);
+    border-radius: var(--borderRadius);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-500);
     cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.8125rem;
+  }
+  .close-btn:hover {
+    background: var(--slate-100);
+    color: var(--slate-900);
+  }
+  header {
+    padding: 0.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--borderColor);
+    margin-bottom: 1rem;
   }
   .nav-links {
-    padding-top: 2rem;
     display: flex;
     flex-direction: column;
+    gap: 2px;
   }
   .nav-link {
     display: flex;
     align-items: center;
-    color: var(--grey-500);
-    padding: 1rem 0;
-    text-transform: capitalize;
+    color: var(--slate-500);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--borderRadius);
+    font-size: 0.875rem;
+    font-weight: 500;
     transition: var(--transition);
   }
   .nav-link:hover {
-    color: var(--grey-900);
+    background: var(--slate-50);
+    color: var(--slate-900);
   }
   .nav-link:hover .icon {
-    color: var(--primary-500);
+    color: var(--brand);
   }
   .icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    display: grid;
-    place-items: center;
+    font-size: 1rem;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    color: var(--slate-400);
     transition: var(--transition);
   }
   .active {
-    color: var(--grey-900);
+    background: var(--brand-muted);
+    color: var(--brand-dark);
   }
   .active .icon {
-    color: var(--primary-500);
+    color: var(--brand);
   }
 `
+
 export default Wrapper

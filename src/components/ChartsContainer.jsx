@@ -3,15 +3,32 @@ import Wrapper from '../assets/wrappers/ChartsContainer'
 import { useState } from 'react'
 import BarChartComponent from './BarChartComponent'
 import AreaChartComponent from './AreaChartComponent'
+
 const ChartsContainer = () => {
   const [barChart, setBarChart] = useState(true)
   const { monthlyApplications: data } = useSelector((store) => store.allJobs)
+
   return (
     <Wrapper>
-      <h4>Monthly Applications</h4>
-      <button type="button" onClick={() => setBarChart(!barChart)}>
-        {barChart ? 'Area Chart' : 'Bar Chart'}
-      </button>
+      <div className="chart-header">
+        <span className="chart-title">Monthly Applications</span>
+        <div className="chart-toggle">
+          <button
+            type="button"
+            className={barChart ? 'active-chart' : ''}
+            onClick={() => setBarChart(true)}
+          >
+            Bar
+          </button>
+          <button
+            type="button"
+            className={!barChart ? 'active-chart' : ''}
+            onClick={() => setBarChart(false)}
+          >
+            Area
+          </button>
+        </div>
+      </div>
       {barChart ? (
         <BarChartComponent data={data} />
       ) : (

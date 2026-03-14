@@ -1,22 +1,20 @@
 import styled from 'styled-components'
-
 const Wrapper = styled.div`
-  margin-top: 0.5rem;
   display: flex;
   align-items: center;
-
+  gap: 0.375rem;
   .icon {
-    font-size: 1rem;
-    margin-right: 1rem;
     display: flex;
     align-items: center;
     svg {
-      color: var(--grey-400);
+      font-size: 0.75rem;
+      color: var(--slate-400);
     }
   }
   .text {
-    text-transform: capitalize;
-    letter-spacing: var(--letterSpacing);
+    font-size: 0.8125rem;
+    color: var(--slate-500);
+    font-weight: 400;
   }
 `
 export default Wrapper

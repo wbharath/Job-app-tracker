@@ -12,10 +12,13 @@ const Job = ({
   jobLocation,
   jobType,
   createdAt,
-  status
+  status,
+  emailDate
 }) => {
   const dispatch = useDispatch()
-  const date = moment(createdAt).local().format('MMM Do, YYYY')
+  const date = moment(emailDate || createdAt)
+    .local()
+    .format('MMM Do, YYYY')
 
   return (
     <Wrapper>
