@@ -1,16 +1,155 @@
-# React + Vite
+# Trackr — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React dashboard for Trackr, an AI-powered job application tracker. Displays job applications, stats, monthly trends, and integrates with the Trackr Chrome extension for seamless job saving and Gmail sync.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Dashboard** — Stats cards showing applications by status (Applied, Interview, Rejected, Offer) and a monthly applications chart
+- **All Jobs** — Paginated job list with search, filter by status/type, and sort options
+- **Add Job** — Manual job entry form
+- **Profile** — Update user details
+- **Responsive** — Collapsible sidebar for mobile and desktop
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 18
+- Redux Toolkit (state management)
+- React Router v7
+- Styled Components
+- Recharts (bar and area charts)
+- Axios
+- React Toastify
+- Moment.js
+
+---
+
+## Project Structure
+
+```
+src/
+├── assets/
+│   └── wrappers/          # Styled-components for each page/component
+├── components/
+│   ├── Navbar.jsx
+│   ├── BigSidebar.jsx
+│   ├── SmallSidebar.jsx
+│   ├── NavLinks.jsx
+│   ├── Logo.jsx
+│   ├── FormRow.jsx
+│   ├── FormRowSelect.jsx
+│   ├── StatItem.jsx
+│   ├── StatsContainer.jsx
+│   ├── ChartsContainer.jsx
+│   ├── BarChartComponent.jsx
+│   ├── AreaChartComponent.jsx
+│   ├── Job.jsx
+│   ├── JobInfo.jsx
+│   ├── JobsContainer.jsx
+│   ├── SearchContainer.jsx
+│   └── PageBtnContainer.jsx
+├── features/
+│   ├── user/
+│   │   ├── userSlice.js
+│   │   └── userThunk.js
+│   ├── jobs/
+│   │   ├── jobSlice.js
+│   │   └── jobThunk.js
+│   └── alljobs/
+│       ├── allJobsSlice.js
+│       └── allJobsThunk.js
+├── pages/
+│   ├── Landing.jsx
+│   ├── Register.jsx
+│   ├── Error.jsx
+│   └── dashboard/
+│       ├── SharedLayout.jsx
+│       ├── Stats.jsx
+│       ├── AllJobs.jsx
+│       ├── AddJob.jsx
+│       └── Profile.jsx
+├── utils/
+│   ├── axios.js
+│   ├── links.jsx
+│   └── localStorage.js
+├── App.jsx
+├── index.css
+└── main.jsx
+```
+
+---
+
+## Setup
+
+### Prerequisites
+- Node.js 18+
+- Trackr backend running
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/wbharath/trackr-frontend.git
+cd trackr-frontend
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Set API base URL
+In `src/utils/axios.js`, update the base URL:
+```javascript
+const customFetch = axios.create({
+  baseURL: 'http://localhost:8080/api/v1'
+})
+```
+
+### 4. Run
+```bash
+npm run dev
+```
+
+App runs on `http://localhost:5173`
+
+---
+
+## Design System
+
+| Token | Value |
+|-------|-------|
+| Brand color | `#0d7a5f` |
+| Heading font | Fraunces (serif) |
+| Body font | DM Sans |
+| Mono font | DM Mono |
+| Border radius | 6px / 10px |
+| Base font size | 20px (125%) |
+
+---
+
+## Status Colors
+
+| Status | Color |
+|--------|-------|
+| APPLIED | Blue |
+| INTERVIEW | Amber |
+| REJECTED | Red |
+| OFFER | Green |
+
+---
+
+## Key Design Decisions
+
+- **Styled Components** — Each page and component has its own wrapper file in `src/assets/wrappers/`
+- **Redux Toolkit** — Three slices: `user` (auth), `job` (add/edit form), `allJobs` (list, filters, stats)
+- **emailDate fallback** — Job cards display `emailDate` for Gmail-synced jobs and `createdAt` for manually added jobs
+- **Timezone** — All dates displayed in local browser timezone using `moment().local()`
+
+---
+
+## Related Repositories
+
+- [trackr-backend](https://github.com/wbharath/trackr-backend) — Spring Boot 4 REST API
+- [trackr-extension](https://github.com/wbharath/Trackr-Extension) — Chrome MV3 extension
